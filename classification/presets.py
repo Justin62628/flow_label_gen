@@ -4,14 +4,14 @@ from torchvision.transforms.functional import InterpolationMode
 
 def get_module(use_v2):
     # We need a protected import to avoid the V2 warning in case just V1 is used
-    if use_v2:
-        import torchvision.transforms.v2
+    # if use_v2:
+    #     import torchvision.transforms.v2
 
-        return torchvision.transforms.v2
-    else:
-        import torchvision.transforms
+    #     return torchvision.transforms.v2
+    # else:
+    import torchvision.transforms
 
-        return torchvision.transforms
+    return torchvision.transforms
 
 
 class ClassificationPresetTrain:
@@ -37,12 +37,12 @@ class ClassificationPresetTrain:
 
         transforms = []
         backend = backend.lower()
-        # if backend == "tensor":
-        #     transforms.append(T.PILToTensor())
-        # elif backend != "pil":
-        #     raise ValueError(f"backend can be 'tensor' or 'pil', but got {backend}")
+        if backend == "tensor":
+            transforms.append(T.PILToTensor())
+        elif backend != "pil":
+            raise ValueError(f"backend can be 'tensor' or 'pil', but got {backend}")
 
-        # transforms.append(T.RandomResizedCrop(crop_size, interpolation=interpolation, antialias=True))
+        transforms.append(T.Resize((crop_size, crop_size), interpolation=interpolation, antialias=True))
         if hflip_prob > 0:
             transforms.append(T.RandomHorizontalFlip(hflip_prob))
         if auto_augment_policy is not None:
@@ -92,15 +92,15 @@ class ClassificationPresetEval:
         T = get_module(use_v2)
         transforms = []
         backend = backend.lower()
-        # if backend == "tensor":
-        #     transforms.append(T.PILToTensor())
-        # elif backend != "pil":
-        #     raise ValueError(f"backend can be 'tensor' or 'pil', but got {backend}")
+        if backend == "tensor":
+            transforms.append(T.PILToTensor())
+        elif backend != "pil":
+            raise ValueError(f"backend can be 'tensor' or 'pil', but got {backend}")
 
-        # transforms += [
-        #     T.Resize(resize_size, interpolation=interpolation, antialias=True),
-        #     T.CenterCrop(crop_size),
-        # ]
+        transforms += [
+            T.Resize((resize_size, resize_size), interpolation=interpolation, antialias=True),
+            # T.CenterCrop(crop_size),
+        ]
 
         if backend == "pil":
             transforms.append(T.PILToTensor())

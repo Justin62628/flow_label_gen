@@ -15,7 +15,7 @@ from torch.utils.data.dataloader import default_collate
 from torchvision.transforms.functional import InterpolationMode
 from transforms import get_mixup_cutmix
 
-from datasets.folder import ImageFolder
+from datasets.folder import FlowLabelDatasetFolder, ImageFolder
 from models.resnet import ResNet, Bottleneck
 
 
@@ -138,7 +138,7 @@ def load_data(traindir, valdir, args):
         random_erase_prob = getattr(args, "random_erase", 0.0)
         ra_magnitude = getattr(args, "ra_magnitude", None)
         augmix_severity = getattr(args, "augmix_severity", None)
-        dataset = ImageFolder(
+        dataset = FlowLabelDatasetFolder(
             traindir,
             presets.ClassificationPresetTrain(
                 crop_size=train_crop_size,
@@ -179,7 +179,7 @@ def load_data(traindir, valdir, args):
                 use_v2=args.use_v2,
             )
 
-        dataset_test = ImageFolder(
+        dataset_test = FlowLabelDatasetFolder(
             valdir,
             preprocessing,
         )

@@ -12,6 +12,16 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "args": ["--root",".", "--output", "dataset", "--index", "lpips", "--ratio", "0.7", "0.2", "0.1"]
+        },
+        {
+            "name": "train",
+            "type": "python",
+            "request": "launch",
+            "program": "train.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}/classification",
+            "args": ["--data-path",  "/root/autodl-tmp/label_gen/dataset",  "-b",  "16",  "-j",  "4",  "--opt",  "adamw",  "--lr",  "0.01",  "--label-smoothing",  "0.11",  "--mixup-alpha",  "0.2",  "--lr-scheduler",  "cosineannealinglr",  "--lr-warmup-method",  "linear",  "--lr-warmup-epochs",  "3",  "--lr-warmup-decay",  "0.033",  "--auto-augment",  "ta_wide",  "--ra-sampler",  "--ra-reps",  "4",  "--amp",  "--model-ema",  "--train-crop-size",  "544",  "--val-resize-size",  "544",  "--train-crop-size",  "544",  "--val-crop-size",  "544",  "--clip-grad-norm",  "1",  "--output-dir",  "output_resnet"]
         }
     ]
 }
