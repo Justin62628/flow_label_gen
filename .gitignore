@@ -1,0 +1,9 @@
+*.log
+output_*
+train_log
+dataset
+*.zip
+__pycache__
+csvs
+*.txt
+weights
